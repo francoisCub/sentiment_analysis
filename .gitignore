@@ -1,0 +1,7 @@
+src/.data
+src/lightning_logs
+src/lstm_logs
+src/lstm
+src/archive
+src/data_classes/__pycache__/IMDB.cpython-38.pyc
+src/scale_batch_size_temp_model.ckpt

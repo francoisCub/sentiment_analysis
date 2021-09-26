@@ -2,6 +2,13 @@
 
 Sentiment analysis project for Web and text analytics course
 
+## Environment
+
+Install conda environment:
+conda env create -f environment.yml
+
+## Goals
+
 Implement an RNN with attention for sentiment analysis. As inspiration, refer to the study of Letarte et al. (https://www.aclweb.org/anthology/W18-5429/) or that of Ambartsoumian & Popowich (https://www.aclweb.org/anthology/W18-6219/).
 Experiments:
 
@@ -10,3 +17,10 @@ Experiments:
 - Investigate the performance using document level embeddings. See Wu et al. (https://www.aclweb.org/anthology/D18-1482/)
 - Investigate the performance without attention
 - (Report & interpret all scores)
+
+## Taks
+
+- Debug data pipeline (shuffling)
+- Implement GRU
+- Add attention
+- Find a good dataset and metrics

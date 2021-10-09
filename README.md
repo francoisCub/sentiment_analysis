@@ -20,7 +20,12 @@ Experiments:
 
 ## Taks
 
-- Debug data pipeline (shuffling)
+- Imlement remaining embeddings: FastTaxt, Word2Vec
 - Implement GRU
 - Add attention
+- Improve dataset with train, test, val parameter and splits.
+- Implement document level embedding.
 - Find a good dataset and metrics
+- Chose hyperparameters for evaluation
+- Implement evaluation
+- Write clear instructions for executing and testing code

@@ -9,3 +9,4 @@ src/archive
 src/data_classes/__pycache__/IMDB.cpython-38.pyc
 src/scale_batch_size_temp_model.ckpt
 sentiment_analysis_workspace.code-workspace
+src/lr_find_temp_model.ckpt

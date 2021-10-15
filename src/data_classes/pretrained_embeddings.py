@@ -1,6 +1,7 @@
 import torchtext
+from typing import Tuple
 
-def get_pretrained_embeddings(embedding="Glove", max_vectors=10000, unk_token="<unk>", unk_index=0, cache="../.vector_cache") -> Tuple[Vocab, Vectors]:
+def get_pretrained_embeddings(embedding="Glove", max_vectors=10000, unk_token="<unk>", unk_index=0, cache=".vector_cache") -> Tuple[torchtext.vocab.Vocab, torchtext.vocab.Vectors]:
     """Returns pretrianed embeddings
 
     Args:

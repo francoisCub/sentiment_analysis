@@ -10,7 +10,7 @@ class IMDBClass(Dataset):
     """IMDB dataset."""
 
     def __init__(self, train=True, root_dir="./data", transform=None):
-        self.imdbs_train, self.imdbs_test= IMDB()
+        self.imdbs_train, self.imdbs_test= IMDB(root_dir)
         self.imdbs = self.imdbs_train if train else self.imdbs_test
         self.root_dir = root_dir
         self.train = train

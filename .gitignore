@@ -10,3 +10,7 @@ src/data_classes/__pycache__/IMDB.cpython-38.pyc
 src/scale_batch_size_temp_model.ckpt
 sentiment_analysis_workspace.code-workspace
 src/lr_find_temp_model.ckpt
+src/data_classes/__pycache__/IMDBLightningDataModule.cpython-38.pyc
+src/data_classes/__pycache__/pretrained_embeddings.cpython-38.pyc
+src/models/__pycache__/LSTM.cpython-38.pyc
+src/models/__pycache__/ClassifierSystem.cpython-38.pyc

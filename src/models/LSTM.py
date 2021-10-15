@@ -1,61 +1,54 @@
+# Model and system definition
 from torch.optim import Adam
 from torch import nn
-from torch.nn.utils.rnn import pad_sequence
 import torch
+from torch.nn.utils.rnn import pad_sequence
+from torch.utils.data import DataLoader
 
-class LSTM(LightningModule):
-    def __init__(self, vocab_size, embedding_size=64, lstm_hidden_size=100, num_class=2):
+class LSTM(nn.Module):
+    def __init__(self, vocab_size=None, embedding_size=64, lstm_hidden_size=100, num_class=2, batch_size=32, learning_rate=0.001, vocab=None, vectors=None):
         super().__init__()
-        self.embedding = torch.nn.Embedding(vocab_size, embedding_size)
+        if vocab is None:
+            self.embedding = torch.nn.Embedding(vocab_size, embedding_size, padding_idx=0)
+        else:
+            self.embedding = torch.nn.Embedding.from_pretrained(vectors.vectors, freeze=True, padding_idx=vocab["<pad>"])
         self.lstm = nn.LSTM(embedding_size, lstm_hidden_size, batch_first=True)
         self.linear = nn.Linear(lstm_hidden_size, num_class)
         self.loss_function = nn.CrossEntropyLoss()
-        self.batch_size = 10
-        self.learning_rate = 0.01
+        self.batch_size = batch_size
+        self.learning_rate = learning_rate
+        self.lstm_hidden_size = lstm_hidden_size
     
-    def forward(self, X: torch.Tensor):
-        x = self.embedding(X)
-        _, (hn, cn) = self.lstm(x)
-        # hn  = hn.view(hn.size(0), -1)
-        x = nn.functional.relu(hn[0])#.hnsqueeze(1)
-        x = self.linear(x)
+    def forward(self, x: torch.Tensor, lengths: torch.LongTensor):
+        x = self.embedding(x)
+        x = torch.nn.utils.rnn.pack_padded_sequence(x, lengths=lengths.to("cpu"), enforce_sorted=False, batch_first=True)
+        _, (hn, _) = self.lstm(x)
+        hn = hn[-1,:,:]
+        x = self.linear(hn)
         return x
     
     def training_step(self, batch, batch_idx):
-        x, y = batch
-        x = pad_sequence(x, batch_first=True)
-        y_hat = self(x)
+        x, y, lengths = batch
+        y_hat = self(x, lengths)
         loss = self.loss_function(y_hat, y)
-        self.log("Train loss", loss.detach())
+        self.log("Train Loss", loss.detach())
         return loss
            
     
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=1e-2)
-    
-    # def train_dataloader(self):
-    #     return train_iter
-    
+        
     def test_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self(x)
+        x, y, lengths = batch
+        y_hat = self(x, lengths)
         loss = self.loss_function(y_hat, y)
-        return dict(
-            test_loss=loss,
-            log=dict(
-                test_loss=loss
-            )
-        )
+        labels_hat = torch.argmax(y_hat, dim=1)
+        test_acc = torch.sum(labels_hat == y).item() / (len(y) * 1.0)
+        return self.log_dict({'Test Loss': loss, 'Test Acc': test_acc})
     
-    def test_epoch_end(self, outputs):
-        avg_loss = torch.stack([x['test_loss'] for x in outputs]).mean()
-        tensorboard_logs = dict(
-            test_loss=avg_loss
-        )
-        return dict(
-            avg_test_loss=avg_loss, 
-            log=tensorboard_logs
-        )
+    def train_dataloader(self):
+        return DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True, collate_fn=collate_fn) # collate_fn=collate_fn
+
     
-    # def test_dataloader(self):
-    #     return test_iter
+    def test_dataloader(self):
+        return DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False, collate_fn=collate_fn)

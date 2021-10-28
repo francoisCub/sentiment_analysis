@@ -14,3 +14,4 @@ src/data_classes/__pycache__/IMDBLightningDataModule.cpython-38.pyc
 src/data_classes/__pycache__/pretrained_embeddings.cpython-38.pyc
 src/models/__pycache__/LSTM.cpython-38.pyc
 src/models/__pycache__/ClassifierSystem.cpython-38.pyc
+src/models/__pycache__/RNN.cpython-38.pyc

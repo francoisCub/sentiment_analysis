@@ -3,8 +3,10 @@ src/.vector_cache
 src/lightning_logs
 src/lstm_logs
 src/tb_logs
+src/csv_logs
 src/exp_logs
 src/lstm
+src/lstm_exp_csv
 src/archive
 src/data_classes/__pycache__/IMDB.cpython-38.pyc
 src/scale_batch_size_temp_model.ckpt
@@ -15,3 +17,6 @@ src/data_classes/__pycache__/pretrained_embeddings.cpython-38.pyc
 src/models/__pycache__/LSTM.cpython-38.pyc
 src/models/__pycache__/ClassifierSystem.cpython-38.pyc
 src/models/__pycache__/RNN.cpython-38.pyc
+src/data_classes/__pycache__/TextLightningDataModule.cpython-38.pyc
+.gitignore
+src/data_classes/__pycache__/YelpReview.cpython-38.pyc

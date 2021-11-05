@@ -26,3 +26,5 @@ src/models/__pycache__/RNN.cpython-38.pyc
 src/data_classes/__pycache__/TextLightningDataModule.cpython-38.pyc
 .gitignore
 src/data_classes/__pycache__/YelpReview.cpython-38.pyc
+src/metrics.py
+src/test.ipynb

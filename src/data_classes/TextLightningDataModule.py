@@ -7,22 +7,26 @@ from torchtext.datasets import IMDB, YelpReviewFull
 from .IMDB import IMDBClass
 from .YelpReview import YelpReviewClass
 
-
-def collate_fn(batch):
-    x = [item[0] for item in batch]
-    lengths = LongTensor(list(map(len, x)))
-    x = pad_sequence(x, batch_first=True)
-    y = LongTensor([item[1] for item in batch])
-    return x, y, lengths
+def get_collate_fn(trunc=-1):
+    def collate_fn(batch):
+        x = [item[0] for item in batch]
+        if trunc > 0:
+            x = [sentence[0:trunc] for sentence in x]
+        lengths = LongTensor(list(map(len, x)))
+        x = pad_sequence(x, batch_first=True)
+        y = LongTensor([item[1] for item in batch])
+        return x, y, lengths
+    return collate_fn
 
 class TextLightningDataModule(LightningDataModule):
-    def __init__(self, vocab, data_dir=".data", batch_size=32, dataset="IMDB", num_workers=0):
+    def __init__(self, vocab, data_dir=".data", batch_size=32, dataset="IMDB", num_workers=0, trunc=-1):
         super().__init__()
         self.data_dir = data_dir
         self.vocab = vocab
         self.batch_size = batch_size
         self.dataset = dataset
         self.num_workers = num_workers
+        self.trunc = trunc
         if self.dataset not in ["IMDB", "Yelp"]:
             raise ValueError('dataset should be in ["IMDB", "Yelp"]')
     
@@ -46,11 +50,11 @@ class TextLightningDataModule(LightningDataModule):
             self.data_test = IMDBClass(root_dir=self.data_dir, train=False, transform=self.vocab) if self.dataset == "IMDB" else YelpReviewClass(root_dir=self.data_dir, train=False, transform=self.vocab)
         
     def train_dataloader(self):
-        return DataLoader(self.data_train, batch_size=self.batch_size, shuffle=True, collate_fn=collate_fn, num_workers=self.num_workers)
+        return DataLoader(self.data_train, batch_size=self.batch_size, shuffle=True, collate_fn=get_collate_fn(self.trunc), num_workers=self.num_workers)
 
     def val_dataloader(self):
-        return DataLoader(self.data_val, batch_size=self.batch_size, shuffle=False, collate_fn=collate_fn, num_workers=self.num_workers)
+        return DataLoader(self.data_val, batch_size=self.batch_size, shuffle=False, collate_fn=get_collate_fn(self.trunc), num_workers=self.num_workers)
 
     def test_dataloader(self):
-        return DataLoader(self.data_test, batch_size=self.batch_size, shuffle=False, collate_fn=collate_fn, num_workers=self.num_workers)
+        return DataLoader(self.data_test, batch_size=self.batch_size, shuffle=False, collate_fn=get_collate_fn(self.trunc), num_workers=self.num_workers)
 

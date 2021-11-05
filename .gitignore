@@ -1,3 +1,4 @@
+.ipynb_checkpoints
 src/.data
 src/.vector_cache
 src/lightning_logs
@@ -5,6 +6,11 @@ src/lstm_logs
 src/tb_logs
 src/csv_logs
 src/exp_logs
+src/exp1
+src/exp1_csv
+src/exp2
+src/exp2_csv
+src/exp1-ckpt
 src/lstm
 src/lstm_exp_csv
 src/archive

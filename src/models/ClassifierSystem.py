@@ -1,16 +1,12 @@
 # Model and system definition
 import torch
 from pytorch_lightning import LightningModule
+from sklearn.metrics import f1_score, precision_score, recall_score
 from torch import nn
 from torch.optim import Adam
-from torchmetrics import Accuracy, Precision, Recall, F1, MetricCollection
-import torchmetrics # does not work properly
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from torchmetrics import Accuracy, MetricCollection, Precision, Recall
 
 from .RNN import RNN
-
-# from torch.utils.data import DataLoader
-
 
 
 class LightningClassifier(LightningModule):

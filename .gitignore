@@ -28,3 +28,4 @@ src/data_classes/__pycache__/TextLightningDataModule.cpython-38.pyc
 src/data_classes/__pycache__/YelpReview.cpython-38.pyc
 src/metrics.py
 src/test.ipynb
+src/models/__pycache__/DocLevelModel.cpython-38.pyc

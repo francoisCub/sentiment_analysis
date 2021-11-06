@@ -7,13 +7,17 @@ from torch.optim import Adam
 from torchmetrics import Accuracy, MetricCollection, Precision, Recall
 
 from .RNN import RNN
+from .DocLevelModel import DocLevelModel
 
 
 class LightningClassifier(LightningModule):
-    def __init__(self, model_type="LSTM", embedding_size=64, hidden_size=100, num_class=2,  num_layers=1, learning_rate=0.001, vocab=None, vectors=None, attention_type=None, output_layer_type="linear", advanced_metrics=False):
+    def __init__(self, embedding_level="word", model_type="LSTM", embedding_size=64, hidden_size=100, num_class=2,  num_layers=1, learning_rate=0.001, vocab=None, vectors=None, attention_type=None, output_layer_type="linear", advanced_metrics=False):
         super().__init__()
         self.model_type = model_type
-        self.model = RNN(embedding_size=embedding_size, hidden_size=hidden_size, num_class=num_class, num_layers=num_layers, vocab=vocab, vectors=vectors, type=model_type, attention_type=attention_type, output_layer_type=output_layer_type)
+        if embedding_level == "word":
+            self.model = RNN(embedding_size=embedding_size, hidden_size=hidden_size, num_class=num_class, num_layers=num_layers, vocab=vocab, vectors=vectors, type=model_type, attention_type=attention_type, output_layer_type=output_layer_type)
+        elif embedding_level == "sentence":
+            self.model = DocLevelModel(vocab=vocab, vectors=vectors, dim=embedding_size, num_class=num_class, method=model_type, output_layer_type=output_layer_type)
         self.learning_rate = learning_rate
         self.loss_function = nn.CrossEntropyLoss()
         self.num_class = num_class

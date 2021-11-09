@@ -68,7 +68,7 @@ class TextLightningDataModule(LightningDataModule):
                     data_full, [585000, 65000])
             elif self.dataset == "IMDBSentence":
                 data_full = IMDBSentenceClass(
-                    root_dir=self.data_dir, train=False, transform=self.vocab, format=self.format)
+                    root_dir=self.data_dir, train=True, format=self.format)
                 self.data_train, self.data_val = random_split(
                     data_full, [22500, 2500])
             else:
@@ -84,7 +84,7 @@ class TextLightningDataModule(LightningDataModule):
                                 train=False, transform=self.vocab)
             elif self.dataset == "IMDBSentence":
                 self.data_test = IMDBSentenceClass(
-                    root_dir=self.data_dir, train=False, transform=self.vocab, format=self.format)
+                    root_dir=self.data_dir, train=False, format=self.format)
 
     def train_dataloader(self):
         return DataLoader(self.data_train, batch_size=self.batch_size, shuffle=self.shuffle, collate_fn=get_collate_fn(self.trunc, format=self.format), num_workers=self.num_workers)

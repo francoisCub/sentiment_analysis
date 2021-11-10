@@ -175,4 +175,5 @@ dependencies:
   - zstd=1.4.9=h19a0ad4_0
   - pip:
     - dataclasses==0.6
+    - gensim=4.1.2
     - piqa==1.1.3

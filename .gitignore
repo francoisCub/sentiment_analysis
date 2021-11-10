@@ -1,4 +1,7 @@
 .ipynb_checkpoints
+.DS_Store
+.vscode/
+.vector_cache
 src/.data
 src/data
 src/tmp
@@ -35,3 +38,4 @@ src/metrics.py
 src/test.ipynb
 src/models/__pycache__/DocLevelModel.cpython-38.pyc
 src/models/__pycache__/wme.cpython-38.pyc
+src/.DS_Store

@@ -11,7 +11,7 @@ class RNN(nn.Module):
         if vocab is None:
             self.embedding = torch.nn.Embedding(vocab_size, embedding_size, padding_idx=0)
         else:
-            self.embedding = torch.nn.Embedding.from_pretrained(vectors.vectors, freeze=True, padding_idx=vocab["<pad>"])
+            self.embedding = torch.nn.Embedding.from_pretrained(vectors, freeze=True, padding_idx=vocab["<pad>"])
         
         self.type = type
         if self.type == "LSTM":

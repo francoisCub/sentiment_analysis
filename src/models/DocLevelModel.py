@@ -16,7 +16,7 @@ class DocLevelModel(nn.Module):
                 raise ValueError(
                     "pre-trained: vocab and vectors should passed for averaging technique")
             self.embedding = nn.Embedding.from_pretrained(
-                vectors.vectors, freeze=True, padding_idx=vocab["<pad>"])
+                vectors, freeze=True, padding_idx=vocab["<pad>"])
         elif self.method == "from-scratch-average":
             if vocab is None:
                 raise ValueError(

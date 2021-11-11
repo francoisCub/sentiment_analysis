@@ -20,6 +20,8 @@ src/exp3
 src/exp3_csv
 src/exp4
 src/exp4_csv
+src/exp5
+src/exp5_csv
 src/exp1-ckpt
 src/lstm
 src/lstm_exp_csv

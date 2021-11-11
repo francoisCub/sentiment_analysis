@@ -58,7 +58,7 @@ class TextLightningDataModule(LightningDataModule):
         if stage == "fit" or stage is None:
             if self.dataset == "IMDB":
                 data_full = IMDBClass(
-                    root_dir=self.data_dir, train=True, transform=self.vocab, format=self.format)
+                    root_dir=self.data_dir, train=True, transform=self.vocab)
                 self.data_train, self.data_val = random_split(
                     data_full, [22500, 2500])
             elif self.dataset == "Yelp":
@@ -78,9 +78,9 @@ class TextLightningDataModule(LightningDataModule):
         if stage == "test" or stage is None:
             if self.dataset == "IMDB":
                 self.data_test = IMDBClass(
-                    root_dir=self.data_dir, train=False, transform=self.vocab, format=self.format)
+                    root_dir=self.data_dir, train=False, transform=self.vocab)
             elif self.dataset == "Yelp":
-                YelpReviewClass(root_dir=self.data_dir,
+                self.data_test = YelpReviewClass(root_dir=self.data_dir,
                                 train=False, transform=self.vocab)
             elif self.dataset == "IMDBSentence":
                 self.data_test = IMDBSentenceClass(

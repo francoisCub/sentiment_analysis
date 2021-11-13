@@ -1,10 +1,9 @@
 # Model and system definition
 import torch
 from pytorch_lightning import LightningModule
-from sklearn.metrics import f1_score, precision_score, recall_score
 from torch import nn
 from torch.optim import Adam
-from torchmetrics import Accuracy, MetricCollection, Precision, Recall
+# from torchmetrics import Accuracy
 
 from .RNN import RNN
 from .DocLevelModel import DocLevelModel
@@ -22,13 +21,6 @@ class LightningClassifier(LightningModule):
         self.loss_function = nn.CrossEntropyLoss()
         self.num_class = num_class
         self.advanced_metrics = advanced_metrics
-        # self.accuracy = Accuracy(num_classes=num_class)
-        # self.compute_precision = Precision(num_classes=num_class)
-        # self.recall = Recall(num_classes=num_class)
-        # self.f1 = F1(num_classes=num_class)
-        metrics = MetricCollection([Accuracy(), Precision(), Recall()])
-        # self.val_metrics = metrics.clone(prefix='Val ')
-        self.test_metrics = metrics.clone(prefix='tm Test ')
     
     def forward(self, x: torch.Tensor, lengths: torch.LongTensor):
         return self.model(x, lengths)
@@ -52,16 +44,20 @@ class LightningClassifier(LightningModule):
         labels_hat = y_hat
         acc = torch.sum(labels_hat == y).item() / (len(y) * 1.0)
         if self.num_class == 2 and self.advanced_metrics:
-            y_labels = y_hat.cpu().numpy()
-            y_numpy = y.cpu().numpy()
-            labels = list(range(self.num_class))
-            prec = precision_score(y_labels, y_numpy, zero_division=0, labels=labels)
-            rec = recall_score(y_labels, y_numpy, zero_division=0, labels=labels)
-            f1 = f1_score(y_labels, y_numpy, zero_division=0, labels=labels)
-            self.log_dict({'Test Precision': prec, 'Test Recall': rec, 'Test F1': f1})
-
-        # m = self.test_metrics(y_hat, y)
-        # self.log_dict(m)
+            # Precision
+            true_pos = torch.sum(labels_hat * y).item()
+            pred_pos = torch.sum(labels_hat)
+            if pred_pos == 0:
+                prec = 0.5
+            else:
+                prec = true_pos / (pred_pos)
+            # Recall
+            pos = torch.sum(y)
+            if pos == 0:
+                rec = 0.5
+            else:
+                rec = true_pos / (pos)
+            self.log_dict({'Test Precision': prec, 'Test Recall': rec})
 
         return self.log_dict({'Test Loss': loss, 'Test Acc': acc})
 

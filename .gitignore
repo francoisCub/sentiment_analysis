@@ -22,6 +22,9 @@ src/exp4
 src/exp4_csv
 src/exp5
 src/exp5_csv
+src/exp6
+src/exp6_csv
+src/model_ckpt
 src/exp1-ckpt
 src/lstm
 src/lstm_exp_csv
@@ -43,3 +46,10 @@ src/test.ipynb
 src/models/__pycache__/DocLevelModel.cpython-38.pyc
 src/models/__pycache__/wme.cpython-38.pyc
 src/.DS_Store
+src/models/__pycache__/ClassifierSystem.cpython-39.pyc
+src/models/__pycache__/DocLevelModel.cpython-39.pyc
+src/models/__pycache__/RNN.cpython-39.pyc
+src/data_classes/__pycache__/IMDB.cpython-39.pyc
+src/data_classes/__pycache__/pretrained_embeddings.cpython-39.pyc
+src/data_classes/__pycache__/TextLightningDataModule.cpython-39.pyc
+src/data_classes/__pycache__/YelpReview.cpython-39.pyc

@@ -1,9 +1,6 @@
 # Model and system definition
-from torch.optim import Adam
 from torch import nn
 import torch
-from torch.nn.utils.rnn import pad_sequence
-from torch.utils.data import DataLoader
 from math import sqrt
 
 class RNN(nn.Module):

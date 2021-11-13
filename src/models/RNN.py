@@ -4,6 +4,7 @@ from torch import nn
 import torch
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader
+from math import sqrt
 
 class RNN(nn.Module):
     def __init__(self, type="LSTM", embedding_size=64, hidden_size=100, num_class=2, num_layers=1, attention_type=None, output_layer_type="linear", vocab=None, vectors=None, vocab_size=None):
@@ -26,6 +27,7 @@ class RNN(nn.Module):
         self.attention_type = attention_type
         if self.attention_type is not None and self.attention_type not in ["last_hidden_layer", "self"]:
             raise ValueError('Attention type should be in ["last_hidden_layer", "self"]')
+        self.scaling_factor = 1.0 / sqrt(hidden_size)
         
         self.output_layer_type = output_layer_type
         if self.output_layer_type == "linear":
@@ -65,7 +67,7 @@ class RNN(nn.Module):
                 att_weights = torch.nn.functional.softmax(att_weights, dim=-1)
                 # [n, 1, H] = [n, 1, L] x [n, L, H]
                 hn = torch.bmm(att_weights, out_sequence)
-                hn = hn.squeeze(1)
+                hn = hn.squeeze(1) * self.scaling_factor
 
             else: # self attention first then last hidden layer attention
                 # self attetion
@@ -81,7 +83,7 @@ class RNN(nn.Module):
                 att_weights = torch.nn.functional.softmax(att_weights, dim=-1)
                 # [n, 1, H] = [n, 1, L] x [n, L, H]
                 hn = torch.bmm(att_weights, att_out_sequence)
-                hn = hn.squeeze(1)
+                hn = hn.squeeze(1) * self.scaling_factor
         
         # Output layer
         x = self.output(hn)

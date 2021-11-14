@@ -4,7 +4,7 @@ Sentiment analysis project for Web and text analytics course
 
 ## Report
 
-The results are presented in the src/report.ipynb notebook.
+The results are presented in the [src/report.ipynb](https://github.com/francoisCub/sentiment_analysis/blob/main/src/report.ipynb) notebook.
 
 ## Environment
 

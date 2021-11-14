@@ -9,7 +9,7 @@ The results are presented in the [src/report.ipynb](https://github.com/francoisC
 ## Environment
 
 Install conda environment:
-conda env create -f environment.yml
+`conda env create -f environment.yml`
 
 ## Goals
 

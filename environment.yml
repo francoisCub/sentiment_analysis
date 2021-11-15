@@ -356,5 +356,13 @@ dependencies:
   - zope.interface=5.3.0=py39h2bbff1b_0
   - zstd=1.4.5=h04227a9_0
   - pip:
-    - gensim==4.1.2
-    - smart-open==5.2.1
+      - gensim==4.1.2
+      - huggingface-hub==0.1.2
+      - pyemd==0.5.1
+      - sacremoses==0.0.46
+      - sentence-transformers==2.1.0
+      - sentencepiece==0.1.96
+      - smart-open==5.2.1
+      - tokenizers==0.10.3
+      - torchvision==0.11.1
+      - transformers==4.12.3

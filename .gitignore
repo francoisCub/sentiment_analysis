@@ -2,10 +2,12 @@
 .DS_Store
 .vscode/
 .vector_cache
-src/.data
+src/.data/*
 src/data
 src/tmp
+src/testwmefolder
 src/.vector_cache
+src/models/.pretrained_model_cache
 src/.pretrained_model_cache
 src/lightning_logs
 src/lstm_logs
@@ -53,3 +55,11 @@ src/data_classes/__pycache__/IMDB.cpython-39.pyc
 src/data_classes/__pycache__/pretrained_embeddings.cpython-39.pyc
 src/data_classes/__pycache__/TextLightningDataModule.cpython-39.pyc
 src/data_classes/__pycache__/YelpReview.cpython-39.pyc
+src/models/__pycache__/wme.cpython-39.pyc
+
+
+
+!src/.data/IMDB_train_wme_train_300.npy
+!src/.data/IMDB_test_wme_test_300.npy
+!src/.data/IMDB_bert_train.pt
+!src/.data/IMDB_bert_test.pt

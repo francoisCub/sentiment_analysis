@@ -60,7 +60,10 @@ class IMDBClass(Dataset):
 
 
 class IMDBSentenceClass(Dataset):
-    """IMDB dataset."""
+    """
+        IMDB dataset with pre-encoded sentence.
+        see models/encode.ipynb to encode sentence before calling this class.
+    """
 
     def __init__(self, train=True, root_dir="./data", format=None):
         imdbs_train, imdbs_test = IMDB(root_dir)
@@ -83,16 +86,16 @@ class IMDBSentenceClass(Dataset):
                 self.encoded_text = torch.load(".data/IMDB_bert_test.pt")
         elif self.format == "wme":
             if train:
-                self.encoded_text = np.load(".data/IMDB_wme_train_300.npy")
+                self.encoded_text = np.load(".data/IMDB_train_wme_train_300.npy")
                 mean = self.encoded_text.mean()
                 std = self.encoded_text.std()
                 self.encoded_text = (self.encoded_text - mean) / std
             else:
-                self.encoded_text = np.load(".data/IMDB_wme_train_300.npy")
+                self.encoded_text = np.load(".data/IMDB_train_wme_train_300.npy")
                 # mean and std computed on train set
                 mean = self.encoded_text.mean()
                 std = self.encoded_text.std()
-                self.encoded_text = np.load(".data/IMDB_wme_test_300.npy")
+                self.encoded_text = np.load(".data/IMDB_test_wme_test_300.npy")
                 self.encoded_text = (self.encoded_text - mean) / std
 
             self.encoded_text = torch.from_numpy(self.encoded_text).float()

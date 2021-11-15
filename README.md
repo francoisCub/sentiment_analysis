@@ -1,6 +1,6 @@
 # Sentiment Analysis
 
-Sentiment analysis project for the 2021-2022 Web and text analytics course at University of Liège.
+Sentiment analysis project for the 2021-2022 _Web and text analytics_ course at University of Liège.
 
 ## Report
 

@@ -5,7 +5,9 @@
 src/.data
 src/data
 src/tmp
+src/testwmefolder
 src/.vector_cache
+src/models/.pretrained_model_cache
 src/.pretrained_model_cache
 src/lightning_logs
 src/lstm_logs
@@ -53,3 +55,4 @@ src/data_classes/__pycache__/IMDB.cpython-39.pyc
 src/data_classes/__pycache__/pretrained_embeddings.cpython-39.pyc
 src/data_classes/__pycache__/TextLightningDataModule.cpython-39.pyc
 src/data_classes/__pycache__/YelpReview.cpython-39.pyc
+src/models/__pycache__/wme.cpython-39.pyc

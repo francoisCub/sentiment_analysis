@@ -1,28 +1,22 @@
-# sentiment_analysis
+# Sentiment Analysis
 
 Sentiment analysis project for Web and text analytics course
 
 ## Report
 
-The results are presented in the [src/report.ipynb](https://github.com/francoisCub/sentiment_analysis/blob/main/src/report.ipynb) notebook.
+The methods and results are presented in the [src/report.ipynb](https://github.com/francoisCub/sentiment_analysis/blob/main/src/report.ipynb) notebook.
 
 ## Environment
 
 Install conda environment:
 `conda env create -f environment.yml`
 
-## Goals
+## Overview
 
-Implement an RNN with attention for sentiment analysis. As inspiration, refer to the study of Letarte et al. (https://www.aclweb.org/anthology/W18-5429/) or that of Ambartsoumian & Popowich (https://www.aclweb.org/anthology/W18-6219/).
-Experiments:
+We investigated different type of models for sentiment analysis.
 
-- Investigate the performance using LSTM vs. GRU
-- Investigate the performance using various word embeddings: Word2Vec, GloVe, FastText.
-- Investigate the performance using document level embeddings. See Wu et al. (https://www.aclweb.org/anthology/D18-1482/)
-- Investigate the performance without attention
-- (Report & interpret all scores)
-
-## Taks
-
-- Report
-- Clean code
+- RNN, LSTM and GRU.
+- Model with or without attention.
+- Word level embeddings: Word2Vec, GloVe, FastText.
+- Document level embeddings: word embedding average from scratch, GloVe word embedding average, sentence BERT and Word Mover Embedding.
+- 2 datasets: IMDB and Yelp reviews.

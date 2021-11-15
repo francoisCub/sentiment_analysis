@@ -23,7 +23,8 @@ def get_pretrained_embeddings(embedding="Glove", max_vectors=10000, dim=300, unk
     """
 
     if embedding == "Glove":
-        vectors = torchtext.vocab.GloVe(max_vectors=max_vectors, cache=cache, dim=dim)
+        vectors = torchtext.vocab.GloVe(
+            max_vectors=max_vectors, cache=cache, dim=dim)
         vocab = torchtext.vocab.vocab(vectors.stoi)
         vocab.insert_token(unk_token, unk_index)
         vocab.set_default_index(vocab[unk_token])
@@ -42,7 +43,8 @@ def get_pretrained_embeddings(embedding="Glove", max_vectors=10000, dim=300, unk
         vocab.insert_token(unk_token, unk_index)
         vocab.set_default_index(vocab[unk_token])
     elif embedding == "FastText":
-        vectors = torchtext.vocab.FastText(max_vectors=max_vectors, cache=cache)
+        vectors = torchtext.vocab.FastText(
+            max_vectors=max_vectors, cache=cache)
         vocab = torchtext.vocab.vocab(vectors.stoi)
         vocab.insert_token(unk_token, unk_index)
         vocab.set_default_index(vocab[unk_token])

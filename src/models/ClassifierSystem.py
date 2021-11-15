@@ -14,28 +14,29 @@ class LightningClassifier(LightningModule):
         super().__init__()
         self.model_type = model_type
         if embedding_level == "word":
-            self.model = RNN(embedding_size=embedding_size, hidden_size=hidden_size, num_class=num_class, num_layers=num_layers, vocab=vocab, vectors=vectors, type=model_type, attention_type=attention_type, output_layer_type=output_layer_type)
+            self.model = RNN(embedding_size=embedding_size, hidden_size=hidden_size, num_class=num_class, num_layers=num_layers,
+                             vocab=vocab, vectors=vectors, type=model_type, attention_type=attention_type, output_layer_type=output_layer_type)
         elif embedding_level == "sentence":
-            self.model = DocLevelModel(vocab=vocab, vectors=vectors, dim=embedding_size, num_class=num_class, method=model_type, output_layer_type=output_layer_type)
+            self.model = DocLevelModel(vocab=vocab, vectors=vectors, dim=embedding_size,
+                                       num_class=num_class, method=model_type, output_layer_type=output_layer_type)
         self.learning_rate = learning_rate
         self.loss_function = nn.CrossEntropyLoss()
         self.num_class = num_class
         self.advanced_metrics = advanced_metrics
-    
+
     def forward(self, x: torch.Tensor, lengths: torch.LongTensor):
         return self.model(x, lengths)
-    
+
     def training_step(self, batch, batch_idx):
         x, y, lengths = batch
         y_hat = self.model(x, lengths)
         loss = self.loss_function(y_hat, y)
         self.log("Train Loss", loss.detach())
         return loss
-           
-    
+
     def configure_optimizers(self):
         return Adam(self.parameters(), lr=self.learning_rate)
-        
+
     def test_step(self, batch, batch_idx):
         x, y, lengths = batch
         y_hat = self.model(x, lengths)
@@ -68,4 +69,3 @@ class LightningClassifier(LightningModule):
         labels_hat = torch.argmax(y_hat, dim=1)
         acc = torch.sum(labels_hat == y).item() / (len(y) * 1.0)
         return self.log_dict({'Val Loss': loss, 'Val Acc': acc})
-    

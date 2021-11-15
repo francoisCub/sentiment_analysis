@@ -4,6 +4,7 @@
 .vector_cache
 src/.data/*
 src/data
+src/experiment_5_old.ipynb
 src/tmp
 src/testwmefolder
 src/.vector_cache
@@ -31,6 +32,7 @@ src/exp1-ckpt
 src/lstm
 src/lstm_exp_csv
 src/archive
+src/results/exp5_all_old.csv
 src/data_classes/__pycache__/IMDB.cpython-38.pyc
 src/scale_batch_size_temp_model.ckpt
 sentiment_analysis_workspace.code-workspace

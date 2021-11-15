@@ -81,7 +81,7 @@ class TextLightningDataModule(LightningDataModule):
                     root_dir=self.data_dir, train=False, transform=self.vocab)
             elif self.dataset == "Yelp":
                 self.data_test = YelpReviewClass(root_dir=self.data_dir,
-                                train=False, transform=self.vocab)
+                                                 train=False, transform=self.vocab)
             elif self.dataset == "IMDBSentence":
                 self.data_test = IMDBSentenceClass(
                     root_dir=self.data_dir, train=False, format=self.format)

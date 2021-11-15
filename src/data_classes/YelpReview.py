@@ -9,7 +9,7 @@ class YelpReviewClass(Dataset):
     """Yelp review full dataset."""
 
     def __init__(self, train=True, root_dir="./data", transform=None):
-        self.yelp_train, self.yelp_test= YelpReviewFull(root_dir)
+        self.yelp_train, self.yelp_test = YelpReviewFull(root_dir)
         self.yelp = self.yelp_train if train else self.yelp_test
         self.root_dir = root_dir
         self.train = train
@@ -19,22 +19,24 @@ class YelpReviewClass(Dataset):
 
         # Build vocabulary
         tokenizer = get_tokenizer('basic_english')
+
         def yield_tokens(data_iter):
             for _, text in data_iter:
                 yield tokenizer(text)
         if transform is None and train:
-            self.vocab = build_vocab_from_iterator(yield_tokens(self.yelp_train), specials=[self.unknown, self.pad])
+            self.vocab = build_vocab_from_iterator(yield_tokens(
+                self.yelp_train), specials=[self.unknown, self.pad])
             self.vocab.set_default_index(self.vocab[self.unknown])
         else:
             self.vocab = transform
 
         # Preprocess data
-        text_pipeline = lambda x: tokenizer(x) # self.vocab(tokenizer(x))
-        label_pipeline = lambda x: x-1
+        def text_pipeline(x): return tokenizer(x)  # self.vocab(tokenizer(x))
+        def label_pipeline(x): return x-1
 
         # Tokenize
-        self.data = [[torch.tensor(label_pipeline(label), dtype=torch.long), text_pipeline(item)] for label, item in self.yelp]
-
+        self.data = [[torch.tensor(label_pipeline(
+            label), dtype=torch.long), text_pipeline(item)] for label, item in self.yelp]
 
     def __len__(self):
         return len(self.data)
@@ -42,8 +44,9 @@ class YelpReviewClass(Dataset):
     def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
-        
-        text_pipeline = lambda x: torch.tensor(self.vocab(x), dtype=torch.long)
+
+        def text_pipeline(x): return torch.tensor(
+            self.vocab(x), dtype=torch.long)
 
         labels = self.data[idx][0]
         if isinstance(idx, int):

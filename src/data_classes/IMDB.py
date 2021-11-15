@@ -86,12 +86,14 @@ class IMDBSentenceClass(Dataset):
                 self.encoded_text = torch.load(".data/IMDB_bert_test.pt")
         elif self.format == "wme":
             if train:
-                self.encoded_text = np.load(".data/IMDB_train_wme_train_300.npy")
+                self.encoded_text = np.load(
+                    ".data/IMDB_train_wme_train_300.npy")
                 mean = self.encoded_text.mean()
                 std = self.encoded_text.std()
                 self.encoded_text = (self.encoded_text - mean) / std
             else:
-                self.encoded_text = np.load(".data/IMDB_train_wme_train_300.npy")
+                self.encoded_text = np.load(
+                    ".data/IMDB_train_wme_train_300.npy")
                 # mean and std computed on train set
                 mean = self.encoded_text.mean()
                 std = self.encoded_text.std()

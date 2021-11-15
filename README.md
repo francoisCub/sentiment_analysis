@@ -11,7 +11,9 @@ Raw results are stored in [src/results](https://github.com/francoisCub/sentiment
 ## Environment
 
 Install conda environment:
+
 `conda env create -f environment.yml`
+
 `conda activate sentiment_analysis`
 
 ## Overview
